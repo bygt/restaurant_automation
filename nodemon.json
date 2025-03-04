@@ -1,0 +1,11 @@
+{
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      "*.log"
+    ],
+    "watch": ["src/**/*.ts"],
+    "exec": "ts-node -r tsconfig-paths/register src/main.ts"
+    
+  }
+  
