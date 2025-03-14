@@ -1,52 +1,51 @@
-import { IsString, IsNumber, IsOptional, IsArray, IsMongoId, Min } from 'class-validator';
+import {  IsArray,  IsMongoId,  IsNotEmpty,  IsNumber,  IsOptional,  IsString,  IsIn,  Min,} from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateOrderDto {
-  @IsNumber()
-  orderNumber: number;
-
-  @IsString()
-  orderType: string; // 'delivery' or 'dinein'
-
   @IsArray()
-  @IsMongoId({ each: true }) // every must be a valid ObjectId 
-  orderItems: string[];
+  @IsNotEmpty({ message: 'Order items cannot be empty' })
+  orderItems: string[]; // ObjectId list for Menu items
+
+  @IsString()
+  @IsNotEmpty({ message: 'Order type is required' })
+  @IsIn(['delivery', 'dinein'], {
+    message: 'Order type must be either delivery or dinein',
+  })
+  orderType: string;
 
   @IsOptional()
   @IsString()
-  address?: string; // only for delivery orders
+  address?: string;
 
   @IsOptional()
-  @IsMongoId()
-  waiter?: string; //courier ID for delivery orders
-  @IsOptional()
-  @IsNumber()
-  @Min(0)
-  shippingPrice?: number; // only for delivery orders
+  @IsMongoId({ message: 'Invalid user ID' })
+  user?: Types.ObjectId; // Only required for delivery orders
+
+  
+  @IsMongoId({ message: 'Invalid user ID' })
+  waiter: Types.ObjectId; 
 
   @IsOptional()
   @IsNumber()
-  tableNumber?: number; // only for dinein orders
+  shippingPrice?: number; // Only required for delivery orders
+
+  @IsOptional()
+  @IsNumber()
+  tableNumber?: number; // Only required for dine-in orders
+
   @IsString()
+  @IsNotEmpty({ message: 'Payment method is required' })
   paymentMethod: string;
 
   @IsNumber()
-  @Min(0)
-  itemsPrice: number;  
+  @Min(0, { message: 'Items price must be at least 0' })
+  itemsPrice: number;
 
-  @IsOptional()
   @IsNumber()
   @Min(0)
-  taxRate?: number; // default value is 18
+  taxRate: number; // Instead of total tax price, store only percentage
 
   @IsNumber()
   @Min(0)
   totalPrice: number;
-
-  @IsOptional()
-  @IsString()
-  status?: string; // 'pending', 'delivered', 'cancelled', 'processing' || default value is 'pending'
-
-  @IsOptional()
-  @IsMongoId()
-  user?: string; // only for delivery orders
 }
