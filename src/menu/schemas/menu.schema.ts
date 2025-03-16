@@ -19,4 +19,4 @@ export class Menu {
   imageUrl: string;
 }
 
-export const OrderSchema = SchemaFactory.createForClass(Menu);
+export const MenuSchema = SchemaFactory.createForClass(Menu);

@@ -5,8 +5,8 @@ import { Order, OrderDocument } from './schemas/order.schema';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
-export class OrderService {
-  constructor(@InjectModel(Order.name) private orderModel: Model<OrderDocument>) {}
+export class OrdersService {
+  constructor(@InjectModel(Order.name) private orderModel: Model<Order>) {}
 
   async createOrder(createOrderDto: CreateOrderDto): Promise<Order> {
     let { orderType, address, user, shippingPrice ,tableNumber , orderItems, paymentMethod, waiter} = createOrderDto;

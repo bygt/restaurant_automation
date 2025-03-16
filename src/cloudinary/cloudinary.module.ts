@@ -4,7 +4,7 @@ import { CloudinaryController } from './cloudinary.controller';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-  imports: [MulterModule.register({ dest: './uploads' })], // Multer'ı burada kullanıyoruz
+  imports: [MulterModule.register({ dest: './uploads' })], 
   controllers: [CloudinaryController],
   providers: [CloudinaryService],
 })

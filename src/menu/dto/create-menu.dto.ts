@@ -13,4 +13,8 @@ export class CreateMenuDto {
   @IsNumber()
   @Min(0, { message: 'Price must be at least 0' })
   price: number;
+
+  @IsString()
+  imageUrl: string;
+
 }
